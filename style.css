@@ -112,20 +112,21 @@ ul { list-style: none; }
     background: linear-gradient(135deg, #fb923c, #f87171);
     border-radius: 20px 20px 100px 20px;
     position: relative;
+    /* Added overflow hidden so the image crops to the blob shape */
     overflow: hidden;
+    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.2);
 }
 
-.photo-placeholder {
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    width: 90%; 
+/* STYLES FOR THE NEW IMAGE */
+.hero-img {
+    width: 90%;
     height: 90%;
     position: absolute;
     bottom: 0;
     left: 5%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    object-fit: cover; /* Ensures the image fills the space without distortion */
 }
 
 .floating-card {
@@ -140,6 +141,7 @@ ul { list-style: none; }
     align-items: center;
     gap: 15px;
     animation: float 3s ease-in-out infinite;
+    z-index: 2; /* Ensure it sits above image */
 }
 
 .floating-card .icon-box {
@@ -227,7 +229,7 @@ ul { list-style: none; }
 .section-subtitle {
     text-align: center;
     color: var(--text-grey);
-    margin-top: -40px; /* Pull it closer to title */
+    margin-top: -40px; 
     margin-bottom: 50px;
     font-size: 1.05rem;
 }
@@ -468,4 +470,5 @@ ul { list-style: none; }
     .hero-visual { width: 100%; justify-content: center; margin-bottom: 40px; }
     .section-title::after { margin: 5px auto; }
     .timeline { padding-left: 20px; margin-left: 10px; }
+    .image-backdrop { width: 90%; height: 400px; margin: 0 auto; }
 }
