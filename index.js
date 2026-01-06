@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Smooth Scrolling for Navigation Links
+    // 1. Scroll Effect for Glass Header
+    const header = document.querySelector('.glass-header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // 2. Smooth Scrolling for Navigation Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -16,13 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Form Submission Handling (Prevent default refresh)
+    // 3. Form Submission Handling
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Simulating button state change
             const btn = contactForm.querySelector('.submit-btn');
             const originalText = btn.innerHTML;
             
@@ -31,35 +39,43 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
                 btn.innerHTML = 'Message Sent! <i class="fa-solid fa-check"></i>';
-                btn.style.backgroundColor = '#10b981'; // Success Green
+                btn.style.backgroundColor = '#10b981';
                 contactForm.reset();
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
-                    btn.style.backgroundColor = ''; // Revert color
+                    btn.style.backgroundColor = '';
                     btn.style.opacity = '1';
                 }, 3000);
             }, 1500);
         });
     }
 
-    // 3. Simple Intersection Observer for Fade-in Animations on scroll
+    // 4. Reveal Animations
     const observerOptions = {
         threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                if (entry.target.classList.contains('skill-tag')) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 50); 
+                } else {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Apply animation styles to major cards
-    const animatableElements = document.querySelectorAll('.stat-card, .timeline-item, .edu-card, .contact-form-wrapper');
+    const animatableElements = document.querySelectorAll(
+        '.stat-card, .timeline-item, .edu-card, .contact-form-wrapper, .about-content, .skill-tag'
+    );
     
     animatableElements.forEach(el => {
         el.style.opacity = '0';
