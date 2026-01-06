@@ -34,9 +34,71 @@ body {
 a { text-decoration: none; }
 ul { list-style: none; }
 
+/* --- GLASSY HEADER (NEW) --- */
+.glass-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
+    backdrop-filter: blur(12px); /* This creates the blur effect */
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+/* Add shadow when scrolling (JS toggles this class) */
+.glass-header.scrolled {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--primary-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-links a:hover { color: var(--primary-blue); }
+
+/* Special style for the "Let's Talk" button in nav */
+.btn-nav {
+    background: var(--primary-dark);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem !important;
+    transition: background 0.3s;
+}
+
+.btn-nav:hover { background: var(--primary-blue); }
+
 /* --- HERO SECTION --- */
 .hero-section {
-    padding: 80px 0;
+    padding-top: 140px; /* Increased to account for fixed header */
+    padding-bottom: 80px;
     min-height: 90vh;
     display: flex;
     align-items: center;
@@ -112,12 +174,10 @@ ul { list-style: none; }
     background: linear-gradient(135deg, #fb923c, #f87171);
     border-radius: 20px 20px 100px 20px;
     position: relative;
-    /* Added overflow hidden so the image crops to the blob shape */
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(249, 115, 22, 0.2);
 }
 
-/* STYLES FOR THE NEW IMAGE */
 .hero-img {
     width: 90%;
     height: 90%;
@@ -126,7 +186,7 @@ ul { list-style: none; }
     left: 5%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    object-fit: cover; /* Ensures the image fills the space without distortion */
+    object-fit: cover;
 }
 
 .floating-card {
@@ -141,7 +201,7 @@ ul { list-style: none; }
     align-items: center;
     gap: 15px;
     animation: float 3s ease-in-out infinite;
-    z-index: 2; /* Ensure it sits above image */
+    z-index: 2;
 }
 
 .floating-card .icon-box {
@@ -188,7 +248,7 @@ ul { list-style: none; }
 .stat-desc { color: var(--text-grey); font-size: 0.9rem; }
 
 /* --- COMMON SECTION STYLES --- */
-.section { padding: 80px 0; }
+.section { padding: 80px 0; scroll-margin-top: 80px; /* Offset for anchor links so header doesn't hide titles */ }
 
 .section-title {
     font-size: 2.5rem;
@@ -464,6 +524,8 @@ ul { list-style: none; }
 .submit-btn:hover { background-color: #2563eb; }
 
 @media (max-width: 768px) {
+    .glass-header { padding: 10px 0; }
+    .nav-links { display: none; /* Hidden on mobile for simplicity, but hamburger would go here */ }
     .hero-container { flex-direction: column-reverse; text-align: center; }
     .hero-buttons { justify-content: center; }
     .hero-footer-info { justify-content: center; margin-bottom: 40px; }
